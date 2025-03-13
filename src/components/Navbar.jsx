@@ -7,7 +7,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
     <nav
       className={`navbar navbar-expand-lg ${
         darkMode ? "navbar-dark bg-dark" : "navbar-light bg-light"
-      }`}
+      } position-relative`}
     >
       <div className="container-fluid">
         {/* Desktop: Left side (logo, school name, navigation buttons) */}
@@ -22,27 +22,23 @@ function Navbar({ darkMode, toggleDarkMode }) {
             />
             Burnaby North Secondary School
           </Link>
-
-          {/* Mobile: Collapsible nav links */}
-          <div className="collapse navbar-collapse d-lg-none" id="mobileNav">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link className="nav-link" to="/about">
-                  About
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/admissions">
-                  Admissions
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/contact">
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </div>
+          <ul className="navbar-nav flex-row">
+            <li className="nav-item me-3">
+              <Link className="nav-link" to="/about">
+                About
+              </Link>
+            </li>
+            <li className="nav-item me-3">
+              <Link className="nav-link" to="/admissions">
+                Admissions
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/contact">
+                Contact
+              </Link>
+            </li>
+          </ul>
         </div>
 
         {/* Desktop: Right side (search bar and dark/light mode button) */}
@@ -96,6 +92,49 @@ function Navbar({ darkMode, toggleDarkMode }) {
           >
             {darkMode ? <FiSun size={20} color="#fff" /> : <FiMoon size={20} />}
           </button>
+        </div>
+
+        {/* Mobile: Collapsible nav links as an overlay dropdown */}
+        <div className="collapse d-lg-none" id="mobileNav">
+          <div
+            className={`position-absolute w-100 ${
+              darkMode ? "bg-dark" : "bg-light"
+            }`}
+            style={{ top: "100%", left: 0, zIndex: 1050 }}
+          >
+            <ul className="navbar-nav">
+              <li className="nav-item ps-3">
+                <Link
+                  className={`nav-link ${
+                    darkMode ? "text-light" : "text-dark"
+                  }`}
+                  to="/about"
+                >
+                  About
+                </Link>
+              </li>
+              <li className="nav-item ps-3">
+                <Link
+                  className={`nav-link ${
+                    darkMode ? "text-light" : "text-dark"
+                  }`}
+                  to="/admissions"
+                >
+                  Admissions
+                </Link>
+              </li>
+              <li className="nav-item ps-3">
+                <Link
+                  className={`nav-link ${
+                    darkMode ? "text-light" : "text-dark"
+                  }`}
+                  to="/contact"
+                >
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
