@@ -1,0 +1,15 @@
+/* Hover effects for nav links and buttons in Light Mode */
+.navbar-light .nav-link:hover,
+.navbar-light .btn:hover {
+  background-color: #e9ecef; /* Light gray hover background */
+  transition: background-color 0.3s;
+  border-radius: 5px;
+}
+
+/* Hover effects for nav links and buttons in Dark Mode */
+.navbar-dark .nav-link:hover,
+.navbar-dark .btn:hover {
+  background-color: #495057; /* Darker gray for dark mode hover */
+  transition: background-color 0.3s;
+  border-radius: 5px;
+}
