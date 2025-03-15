@@ -41,7 +41,7 @@ function Banner() {
           rel="noopener noreferrer"
         >
           <img
-            src="/images/41.png"
+            src="/images/41-logo-1.png"
             alt="Burnaby School District 41"
             style={{ width: "auto", height: "30px" }}
           />

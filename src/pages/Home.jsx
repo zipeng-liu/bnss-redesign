@@ -9,12 +9,14 @@ import NewsArchive from "../components/NewsArchive";
 import ContactInfo from "../components/ContactInfo";
 import Weather from "../components/Weather";
 import EmailContact from "../components/EmailContact";
+import AdditionalNav from "../components/AdditionalNav";
 
 function Home() {
   return (
     <>
       <Banner />
       <CarouselSection />
+      <AdditionalNav />
 
       <div className="container my-4">
         <div className="row">
