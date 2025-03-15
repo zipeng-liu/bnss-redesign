@@ -32,7 +32,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  School Info
+                  School Information
                 </a>
                 <ul
                   className={dropdownMenuClass}
@@ -259,7 +259,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Depts
+                  Departments
                 </a>
                 <ul
                   className={dropdownMenuClass}
@@ -445,6 +445,9 @@ function Navbar({ darkMode, toggleDarkMode }) {
             style={{ top: "100%", left: 0, zIndex: 1050 }}
           >
             <ul className="navbar-nav">
+              <Link className="dropdown-item" to="/">
+                Home
+              </Link>
               {/* Mobile School Info Dropdown */}
               <li className="nav-item dropdown">
                 <a
