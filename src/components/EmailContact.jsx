@@ -4,19 +4,10 @@ import React from "react";
 function EmailContact() {
   return (
     <div className="my-4">
-      <h4>Contact Us by Email</h4>
+      <h4>Subscribe by Email</h4>
+      <p>Get an email every time we post new information! Subscribe today.</p>
       <form>
-        <div className="mb-3">
-          <label htmlFor="nameInput" className="form-label">
-            Name
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="nameInput"
-            placeholder="Your Name"
-          />
-        </div>
+        {/* Email Only */}
         <div className="mb-3">
           <label htmlFor="emailInput" className="form-label">
             Email
@@ -28,18 +19,18 @@ function EmailContact() {
             placeholder="name@example.com"
           />
         </div>
-        <div className="mb-3">
-          <label htmlFor="messageInput" className="form-label">
-            Message
-          </label>
-          <textarea
-            className="form-control"
-            id="messageInput"
-            rows="3"
-          ></textarea>
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Send
+
+        {/* Dark gray Subscribe button */}
+        <button
+          type="submit"
+          className="btn"
+          style={{
+            backgroundColor: "#555",
+            color: "#fff",
+            border: "none",
+          }}
+        >
+          Subscribe
         </button>
       </form>
     </div>

@@ -1,7 +1,8 @@
 import React from "react";
+// Import the Twitter icon as a placeholder for "X"
+import { FaTwitter } from "react-icons/fa";
 
 function Banner() {
-  // Inline style for the banner block
   const bannerStyle = {
     background: "radial-gradient(circle, #5a1f12, #360404)",
     backgroundSize: "cover",
@@ -22,6 +23,47 @@ function Banner() {
       />
       <h1>Burnaby North Secondary School</h1>
       <h3>Burnaby School District</h3>
+
+      {/* Row with District 41 logo and X link */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "30px",
+          marginTop: "10px",
+        }}
+      >
+        {/* District 41 Logo */}
+        <a
+          href="https://burnabyschools.ca/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src="/images/41.png"
+            alt="Burnaby School District 41"
+            style={{ width: "auto", height: "30px" }}
+          />
+        </a>
+
+        {/* "X" / Twitter Link */}
+        <a
+          href="https://x.com/bnss"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            color: "#fff",
+            textDecoration: "none",
+            gap: "5px",
+          }}
+        >
+          <FaTwitter style={{ fontSize: "30px", color: "#1DA1F2" }} />
+          <span>@bnss</span>
+        </a>
+      </div>
     </div>
   );
 }

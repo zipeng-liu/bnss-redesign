@@ -23,7 +23,7 @@ function Home() {
             <NewsAtNorth />
           </div>
 
-          {/* Right column: News Blog Items */}
+          {/* Right column: Quick Links */}
           <div className="col-md-4">
             <QuickLinks />
           </div>
@@ -31,9 +31,19 @@ function Home() {
 
         <RecentNews />
         <NewsArchive />
-        <ContactInfo />
-        <Weather />
-        <EmailContact />
+
+        {/* Row for Contact, Weather, Email */}
+        <div className="row">
+          <div className="col-md-4">
+            <ContactInfo />
+          </div>
+          <div className="col-md-4">
+            <Weather />
+          </div>
+          <div className="col-md-4">
+            <EmailContact />
+          </div>
+        </div>
       </div>
     </>
   );

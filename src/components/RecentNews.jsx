@@ -1,4 +1,4 @@
-// src/components/NewsBlogSection.jsx
+// src/components/RecentNews.jsx
 import React from "react";
 
 function RecentNews() {
@@ -81,13 +81,19 @@ function RecentNews() {
                 <p className="card-text mt-2" style={{ flexGrow: 1 }}>
                   {news.summary}
                 </p>
+                {/* Dark gray button with "Continue Reading" text */}
                 <a
                   href={news.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-primary mt-auto"
+                  className="btn mt-auto"
+                  style={{
+                    backgroundColor: "#555",
+                    color: "#fff",
+                    border: "none",
+                  }}
                 >
-                  Read More
+                  Continue Reading
                 </a>
               </div>
             </div>
