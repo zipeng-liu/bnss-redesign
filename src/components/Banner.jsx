@@ -18,7 +18,7 @@ function Banner() {
       <img
         src="/images/logo.png"
         alt="School Logo"
-        style={{ width: "200px", marginBottom: "20px" }}
+        style={{ width: "150px", marginBottom: "20px" }}
       />
       <h1>Burnaby North Secondary School</h1>
       <h3>Burnaby School District</h3>
