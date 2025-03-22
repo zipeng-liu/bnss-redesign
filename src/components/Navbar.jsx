@@ -1,9 +1,176 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FiSun, FiMoon, FiHome } from "react-icons/fi";
+import { FiSun, FiMoon, FiHome, FiX, FiArrowLeft } from "react-icons/fi";
 
 function Navbar({ darkMode, toggleDarkMode }) {
-  // Apply dark mode class to dropdown menus when enabled.
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState(null);
+
+  // Disable body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
+  // Main navigation categories with their dropdown items
+  const navCategories = [
+    {
+      title: "School Information",
+      items: [
+        { title: "Accessibility at North", path: "/school-info/accessibility" },
+        {
+          title: "Administration - Bell Schedules",
+          path: "/school-info/administration/bell-schedules",
+        },
+        {
+          title: "Administration - Code of Conduct",
+          path: "/school-info/administration/code-of-conduct",
+        },
+        { title: "Alumni", path: "/school-info/alumni" },
+        {
+          title: "Board of Education",
+          path: "/school-info/board-of-education",
+        },
+        {
+          title: "Documents - School Plan",
+          path: "/school-info/documents/school-plan",
+        },
+        {
+          title: "Registration & Course Selection",
+          path: "/school-info/registration-course-selection",
+        },
+        { title: "School Fees", path: "/school-info/school-fees" },
+        { title: "Staff Directory", path: "/school-info/staff-directory" },
+        {
+          title: "Start of School Info",
+          path: "/school-info/start-of-school-info",
+        },
+        {
+          title: "Travelling to Campus",
+          path: "/school-info/travelling-to-campus",
+        },
+      ],
+    },
+    {
+      title: "Programs",
+      items: [
+        {
+          title: "AP & Excel Program - AP Exams Info",
+          path: "/programs/ap-excel/ap-exams-info",
+        },
+        {
+          title: "AP & Excel Program - Grade 8‑12 Excel Information",
+          path: "/programs/ap-excel/grade8-12-excel-info",
+        },
+        {
+          title: "AP & Excel Program - Benefits of AP",
+          path: "/programs/ap-excel/benefits-of-ap",
+        },
+        {
+          title: "AP & Excel Program - Advanced Placement Course Descriptions",
+          path: "/programs/ap-excel/advanced-placement-course-descriptions",
+        },
+        {
+          title: "AP & Excel Program - AP Capstone Program",
+          path: "/programs/ap-excel/ap-capstone-program",
+        },
+        {
+          title: "Career Programs - Careers IG",
+          path: "/programs/career-programs/careers-ig",
+        },
+        {
+          title: "Connect & Success Programs",
+          path: "/programs/connect-success-programs",
+        },
+        {
+          title:
+            "District Programs - Career Training at North - Film & Broadcast",
+          path: "/programs/district/career-training/film-broadcast",
+        },
+        {
+          title:
+            "District Programs - Career Training at North - Music Production & Technology",
+          path: "/programs/district/career-training/music-production",
+        },
+        {
+          title: "ELL Programme - ELL Support Site",
+          path: "/programs/ell/ell-support-site",
+        },
+        { title: "Re-Think", path: "/programs/re-think" },
+        {
+          title: "Sports Academies - Hockey Academy",
+          path: "/programs/sports/hockey-academy",
+        },
+        {
+          title: "Sports Academies - SD41/SFU Soccer Program",
+          path: "/programs/sports/sd41-sfu-soccer",
+        },
+      ],
+    },
+    {
+      title: "Departments",
+      items: [
+        { title: "ACE‑IT Programmes", path: "/depts/ace-it" },
+        {
+          title: "Applied Skills - Business Education",
+          path: "/depts/applied-skills/business-education",
+        },
+        {
+          title: "Applied Skills - Home Economics",
+          path: "/depts/applied-skills/home-economics",
+        },
+        {
+          title: "Applied Skills - Technology Education",
+          path: "/depts/applied-skills/technology-education",
+        },
+        { title: "Career Education (CLC)", path: "/depts/career-education" },
+        { title: "Indigenous Education", path: "/depts/indigenous-education" },
+        { title: "English", path: "/depts/english" },
+        {
+          title: "Learning Support Services (LSS)",
+          path: "/depts/learning-support",
+        },
+        { title: "Mathematics", path: "/depts/mathematics" },
+        { title: "Modern Languages", path: "/depts/modern-languages" },
+        {
+          title: "Physical & Health Education - FLEX",
+          path: "/depts/physical-health/flex",
+        },
+        { title: "Science", path: "/depts/science" },
+        { title: "Social Studies Department", path: "/depts/social-studies" },
+        { title: "Student Services", path: "/depts/student-services" },
+        {
+          title: "Visual Performing Arts Department",
+          path: "/depts/visual-performing-arts",
+        },
+      ],
+    },
+  ];
+
+  // Toggle mobile full-screen menu
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+    setActiveCategory(null); // Reset active category
+  };
+
+  // Select category for mobile view
+  const toggleCategory = (index) => {
+    setActiveCategory(index);
+  };
+
+  // Back to main categories
+  const backToCategories = () => {
+    setActiveCategory(null);
+  };
+
+  // Apply dark mode class to dropdown menus when enabled
   const dropdownMenuClass = `dropdown-menu ${
     darkMode ? "dropdown-menu-dark" : ""
   }`;
@@ -16,362 +183,47 @@ function Navbar({ darkMode, toggleDarkMode }) {
         } position-relative`}
       >
         <div className="container-fluid">
-          {/* Desktop: Left side (logo and navigation buttons) */}
+          {/* Desktop: Left side (home button and navigation buttons) */}
           <div className="d-none d-lg-flex align-items-center">
             <Link className="btn btn-outline-secondary me-3" to="/">
               <FiHome size={18} className="me-1" /> Home
             </Link>
             <ul className="navbar-nav flex-row">
-              {/* School Info Dropdown */}
-              <li className="nav-item dropdown me-3">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  id="schoolInfoDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  School Information
-                </a>
-                <ul
-                  className={dropdownMenuClass}
-                  aria-labelledby="schoolInfoDropdown"
-                >
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/accessibility"
-                    >
-                      Accessibility at North
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/administration/bell-schedules"
-                    >
-                      Administration - Bell Schedules
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/administration/code-of-conduct"
-                    >
-                      Administration - Code of Conduct
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/school-info/alumni">
-                      Alumni
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/board-of-education"
-                    >
-                      Board of Education
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/documents/school-plan"
-                    >
-                      Documents - School Plan
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/registration-course-selection"
-                    >
-                      Registration &amp; Course Selection
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/school-fees"
-                    >
-                      School Fees
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/staff-directory"
-                    >
-                      Staff Directory
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/start-of-school-info"
-                    >
-                      Start of School Info
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/travelling-to-campus"
-                    >
-                      Travelling to Campus
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-
-              {/* Programs Dropdown */}
-              <li className="nav-item dropdown me-3">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  id="programsDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Programs
-                </a>
-                <ul
-                  className={dropdownMenuClass}
-                  aria-labelledby="programsDropdown"
-                >
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/ap-excel/ap-exams-info"
-                    >
-                      AP &amp; Excel Program - AP Exams Info
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/ap-excel/grade8-12-excel-info"
-                    >
-                      AP &amp; Excel Program - Grade 8‑12 Excel Information
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/ap-excel/benefits-of-ap"
-                    >
-                      AP &amp; Excel Program - Benefits of AP
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/ap-excel/advanced-placement-course-descriptions"
-                    >
-                      AP &amp; Excel Program - Advanced Placement Course
-                      Descriptions
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/ap-excel/ap-capstone-program"
-                    >
-                      AP &amp; Excel Program - AP Capstone Program
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/career-programs/careers-ig"
-                    >
-                      Career Programs - Careers IG
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/connect-success-programs"
-                    >
-                      Connect &amp; Success Programs
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/district/career-training/film-broadcast"
-                    >
-                      District Programs - Career Training at North - Film &amp;
-                      Broadcast
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/district/career-training/music-production"
-                    >
-                      District Programs - Career Training at North - Music
-                      Production &amp; Technology
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/ell/ell-support-site"
-                    >
-                      ELL Programme - ELL Support Site
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/programs/re-think">
-                      Re-Think
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/sports/hockey-academy"
-                    >
-                      Sports Academies - Hockey Academy
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/sports/sd41-sfu-soccer"
-                    >
-                      Sports Academies - SD41/SFU Soccer Program
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-
-              {/* Depts Dropdown */}
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  id="deptsDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Departments
-                </a>
-                <ul
-                  className={dropdownMenuClass}
-                  aria-labelledby="deptsDropdown"
-                >
-                  <li>
-                    <Link className="dropdown-item" to="/depts/ace-it">
-                      ACE‑IT Programmes
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/applied-skills/business-education"
-                    >
-                      Applied Skills - Business Education
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/applied-skills/home-economics"
-                    >
-                      Applied Skills - Home Economics
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/applied-skills/technology-education"
-                    >
-                      Applied Skills - Technology Education
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/career-education"
-                    >
-                      Career Education (CLC)
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/indigenous-education"
-                    >
-                      Indigenous Education
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/depts/english">
-                      English
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/learning-support"
-                    >
-                      Learning Support Services (LSS)
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/depts/mathematics">
-                      Mathematics
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/modern-languages"
-                    >
-                      Modern Languages
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/physical-health/flex"
-                    >
-                      Physical &amp; Health Education - FLEX
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/depts/science">
-                      Science
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/depts/social-studies">
-                      Social Studies Department
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/student-services"
-                    >
-                      Student Services
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/visual-performing-arts"
-                    >
-                      Visual Performing Arts Department
-                    </Link>
-                  </li>
-                </ul>
-              </li>
+              {/* Map through nav categories for desktop view */}
+              {navCategories.map((category, index) => (
+                <li className="nav-item dropdown me-3" key={index}>
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    id={`dropdown-${category.title}`}
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    style={{
+                      fontWeight: "500",
+                      backgroundColor: "transparent",
+                    }}
+                  >
+                    {category.title}
+                  </a>
+                  <ul
+                    className={dropdownMenuClass}
+                    aria-labelledby={`dropdown-${category.title}`}
+                    style={{
+                      minWidth: "200px",
+                    }}
+                    data-bs-popper="static" // Force dropdown to open downward
+                  >
+                    {category.items.map((item, idx) => (
+                      <li key={idx}>
+                        <Link className="dropdown-item" to={item.path}>
+                          {item.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -396,403 +248,177 @@ function Navbar({ darkMode, toggleDarkMode }) {
 
           {/* Mobile view: Combined row with menu toggler and dark/light mode button */}
           <div className="d-flex d-lg-none align-items-center w-100">
+            <Link to="/" className="navbar-brand me-auto">
+              <FiHome size={20} />
+            </Link>
+
             <button
-              className="navbar-toggler me-2"
+              className="navbar-toggler me-2 border-0"
               type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#mobileNav"
-              aria-controls="mobileNav"
-              aria-expanded="false"
+              onClick={toggleMobileMenu}
+              aria-expanded={mobileMenuOpen}
               aria-label="Toggle navigation"
             >
               <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="ms-auto">
-              <button
-                className="btn"
-                onClick={toggleDarkMode}
-                style={{
-                  color: darkMode ? "#fff" : "inherit",
-                  border: "none",
-                  background: "transparent",
-                }}
-              >
-                {darkMode ? (
-                  <FiSun size={20} color="#fff" />
-                ) : (
-                  <FiMoon size={20} />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
 
-        {/* Mobile: Collapsible nav links as an overlay dropdown */}
-        <div className="collapse d-lg-none" id="mobileNav">
-          <div
-            className={`position-absolute w-100 ${
-              darkMode ? "bg-dark" : "bg-light"
-            }`}
-            style={{ top: "100%", left: 0, zIndex: 1050 }}
-          >
-            <ul className="navbar-nav">
-              <Link className="dropdown-item" to="/">
-                Home
-              </Link>
-              {/* Mobile School Info Dropdown */}
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  id="mobileSchoolInfoDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  School Info
-                </a>
-                <ul
-                  className={dropdownMenuClass}
-                  aria-labelledby="mobileSchoolInfoDropdown"
-                >
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/accessibility"
-                    >
-                      Accessibility at North
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/administration/bell-schedules"
-                    >
-                      Administration - Bell Schedules
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/administration/code-of-conduct"
-                    >
-                      Administration - Code of Conduct
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/school-info/alumni">
-                      Alumni
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/board-of-education"
-                    >
-                      Board of Education
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/documents/school-plan"
-                    >
-                      Documents - School Plan
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/registration-course-selection"
-                    >
-                      Registration &amp; Course Selection
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/school-fees"
-                    >
-                      School Fees
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/staff-directory"
-                    >
-                      Staff Directory
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/start-of-school-info"
-                    >
-                      Start of School Info
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/school-info/travelling-to-campus"
-                    >
-                      Travelling to Campus
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-
-              {/* Mobile Programs Dropdown */}
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  id="mobileProgramsDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Programs
-                </a>
-                <ul
-                  className={dropdownMenuClass}
-                  aria-labelledby="mobileProgramsDropdown"
-                >
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/ap-excel/ap-exams-info"
-                    >
-                      AP &amp; Excel Program - AP Exams Info
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/ap-excel/grade8-12-excel-info"
-                    >
-                      AP &amp; Excel Program - Grade 8‑12 Excel Information
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/ap-excel/benefits-of-ap"
-                    >
-                      AP &amp; Excel Program - Benefits of AP
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/ap-excel/advanced-placement-course-descriptions"
-                    >
-                      AP &amp; Excel Program - Advanced Placement Course
-                      Descriptions
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/ap-excel/ap-capstone-program"
-                    >
-                      AP &amp; Excel Program - AP Capstone Program
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/career-programs/careers-ig"
-                    >
-                      Career Programs - Careers IG
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/connect-success-programs"
-                    >
-                      Connect &amp; Success Programs
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/district/career-training/film-broadcast"
-                    >
-                      District Programs - Career Training at North - Film &amp;
-                      Broadcast
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/district/career-training/music-production"
-                    >
-                      District Programs - Career Training at North - Music
-                      Production &amp; Technology
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/ell/ell-support-site"
-                    >
-                      ELL Programme - ELL Support Site
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/programs/re-think">
-                      Re-Think
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/sports/hockey-academy"
-                    >
-                      Sports Academies - Hockey Academy
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/programs/sports/sd41-sfu-soccer"
-                    >
-                      Sports Academies - SD41/SFU Soccer Program
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-
-              {/* Mobile Depts Dropdown */}
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  id="mobileDeptsDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Depts
-                </a>
-                <ul
-                  className={dropdownMenuClass}
-                  aria-labelledby="mobileDeptsDropdown"
-                >
-                  <li>
-                    <Link className="dropdown-item" to="/depts/ace-it">
-                      ACE‑IT Programmes
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/applied-skills/business-education"
-                    >
-                      Applied Skills - Business Education
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/applied-skills/home-economics"
-                    >
-                      Applied Skills - Home Economics
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/applied-skills/technology-education"
-                    >
-                      Applied Skills - Technology Education
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/career-education"
-                    >
-                      Career Education (CLC)
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/indigenous-education"
-                    >
-                      Indigenous Education
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/depts/english">
-                      English
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/learning-support"
-                    >
-                      Learning Support Services (LSS)
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/depts/mathematics">
-                      Mathematics
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/modern-languages"
-                    >
-                      Modern Languages
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/physical-health/flex"
-                    >
-                      Physical &amp; Health Education - FLEX
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/depts/science">
-                      Science
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/depts/social-studies">
-                      Social Studies Department
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/student-services"
-                    >
-                      Student Services
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/depts/visual-performing-arts"
-                    >
-                      Visual Performing Arts Department
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-            </ul>
+            <button
+              className="btn"
+              onClick={toggleDarkMode}
+              style={{
+                color: darkMode ? "#fff" : "inherit",
+                border: "none",
+                background: "transparent",
+              }}
+            >
+              {darkMode ? (
+                <FiSun size={20} color="#fff" />
+              ) : (
+                <FiMoon size={20} />
+              )}
+            </button>
           </div>
         </div>
       </nav>
+
+      {/* Mobile: Full-screen menu */}
+      {mobileMenuOpen && (
+        <div
+          className="mobile-fullscreen-menu"
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 1050,
+            background: darkMode
+              ? "rgba(0,0,0,0.95)"
+              : "rgba(255,255,255,0.95)",
+            overflow: "auto",
+          }}
+        >
+          <div
+            className="menu-header d-flex justify-content-between align-items-center p-3"
+            style={{
+              borderBottom: `1px solid ${darkMode ? "#495057" : "#dee2e6"}`,
+              position: "sticky",
+              top: 0,
+              background: darkMode ? "#212529" : "#f8f9fa",
+              zIndex: 1,
+            }}
+          >
+            {activeCategory !== null ? (
+              <>
+                <button
+                  className={`btn btn-sm ${
+                    darkMode ? "text-light" : "text-dark"
+                  }`}
+                  onClick={backToCategories}
+                  style={{ background: "transparent" }}
+                >
+                  <FiArrowLeft size={18} className="me-2" />
+                  Back
+                </button>
+                <h5 className={`m-0 ${darkMode ? "text-light" : "text-dark"}`}>
+                  {navCategories[activeCategory].title}
+                </h5>
+              </>
+            ) : (
+              <h5 className={`m-0 ${darkMode ? "text-light" : "text-dark"}`}>
+                Menu
+              </h5>
+            )}
+
+            <button
+              className="btn"
+              onClick={toggleMobileMenu}
+              style={{ background: "transparent" }}
+            >
+              <FiX
+                size={24}
+                className={darkMode ? "text-light" : "text-dark"}
+              />
+            </button>
+          </div>
+
+          <div className="p-3">
+            {activeCategory === null ? (
+              // Show main categories
+              <div className="menu-categories">
+                {navCategories.map((category, index) => (
+                  <button
+                    key={index}
+                    className={`btn btn-lg w-100 text-start mb-3 py-3 ${
+                      darkMode
+                        ? "btn-outline-light border-secondary"
+                        : "btn-outline-dark"
+                    }`}
+                    onClick={() => toggleCategory(index)}
+                  >
+                    {category.title}
+                  </button>
+                ))}
+
+                {/* Home button in the menu */}
+                <Link
+                  to="/"
+                  className={`btn btn-lg w-100 text-start mb-3 py-3 ${
+                    darkMode ? "btn-success" : "btn-success"
+                  }`}
+                  onClick={toggleMobileMenu}
+                >
+                  <FiHome size={18} className="me-2" />
+                  Home
+                </Link>
+              </div>
+            ) : (
+              // Show items of selected category
+              <div className="menu-items">
+                <div className="list-group">
+                  {navCategories[activeCategory].items.map((item, idx) => (
+                    <Link
+                      key={idx}
+                      className={`list-group-item list-group-item-action py-3 ${
+                        darkMode ? "bg-dark text-light border-secondary" : ""
+                      }`}
+                      to={item.path}
+                      onClick={toggleMobileMenu}
+                    >
+                      {item.title}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* CSS to ensure dropdowns open downward */}
+      <style jsx>{`
+        /* Override Bootstrap's dropdown positioning for consistent behavior */
+        .dropdown-menu[data-bs-popper] {
+          top: 100% !important;
+          left: 0 !important;
+          margin-top: 0.125rem !important;
+          transform: none !important;
+        }
+
+        /* Mobile fullscreen menu transitions */
+        .mobile-fullscreen-menu {
+          animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+      `}</style>
     </>
   );
 }
