@@ -2,6 +2,37 @@ import React, { useEffect, useState } from "react";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaGraduationCap, FaCalendarAlt } from "react-icons/fa";
 
+// Define animations in a CSS stylesheet that will be loaded on page load
+const animationStyles = `
+  @keyframes gradient-slide {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+  
+  @keyframes wave-move {
+    0% { background-position-x: 0%; }
+    100% { background-position-x: 100%; }
+  }
+  
+  @keyframes sparkle-effect {
+    0% { opacity: 0.2; }
+    50% { opacity: 0.4; }
+    100% { opacity: 0.2; }
+  }
+  
+  .animated-gradient {
+    animation: gradient-slide 5s linear infinite;
+  }
+  
+  .animated-wave {
+    animation: wave-move 10s linear infinite;
+  }
+  
+  .animated-sparkle {
+    animation: sparkle-effect 3s linear infinite;
+  }
+`;
+
 function Banner() {
   const [darkMode, setDarkMode] = useState(false);
 
@@ -44,53 +75,6 @@ function Banner() {
     transition: "background 0.5s ease",
   };
 
-  // Animated gradient borders
-  const gradientBorderStyle = {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    height: "5px",
-    background: darkMode
-      ? "linear-gradient(90deg, #3f51b5, #7986cb, #3f51b5)"
-      : "linear-gradient(90deg, #ff9800, #ffeb3b, #ff9800)",
-    backgroundSize: "200% 200%",
-    animation: "gradient-slide 5s linear infinite",
-    zIndex: 3, // Ensure it's above other elements
-  };
-
-  // Wave animation at the bottom
-  const waveStyle = {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    width: "100%",
-    height: "30px",
-    opacity: 0.3,
-    background: darkMode
-      ? 'url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%233f51b5" d="M0,288L48,272C96,256,192,224,288,197.3C384,171,480,149,576,165.3C672,181,768,235,864,250.7C960,267,1056,245,1152,224C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>\')'
-      : 'url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ff9800" d="M0,288L48,272C96,256,192,224,288,197.3C384,171,480,149,576,165.3C672,181,768,235,864,250.7C960,267,1056,245,1152,224C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>\')',
-    backgroundSize: "100% 100%",
-    backgroundRepeat: "no-repeat",
-    animation: "wave 10s linear infinite",
-    zIndex: 1, // Ensure proper stacking
-  };
-
-  // Background pattern - diagonal lines or dots
-  const patternStyle = {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundImage: darkMode
-      ? "radial-gradient(circle, rgba(255, 255, 255, 0.1) 2px, transparent 2px)"
-      : "repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05) 10px, transparent 10px, transparent 20px)",
-    backgroundSize: darkMode ? "30px 30px" : "20px 20px",
-    opacity: 0.3,
-    animation: darkMode ? "sparkle 3s linear infinite" : "",
-  };
-
   const titleStyle = {
     fontWeight: "700",
     textShadow: "2px 2px 4px rgba(0, 0, 0, 0.4)",
@@ -111,9 +95,62 @@ function Banner() {
 
   return (
     <div style={bannerStyle}>
-      <div style={gradientBorderStyle}></div>
-      <div style={patternStyle}></div>
-      <div style={waveStyle}></div>
+      {/* Inject animation styles */}
+      <style dangerouslySetInnerHTML={{ __html: animationStyles }} />
+
+      {/* Animated gradient border at top */}
+      <div
+        className="animated-gradient"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "5px",
+          background: darkMode
+            ? "linear-gradient(90deg, #3f51b5, #7986cb, #3f51b5)"
+            : "linear-gradient(90deg, #ff9800, #ffeb3b, #ff9800)",
+          backgroundSize: "200% 200%",
+          zIndex: 3,
+        }}
+      ></div>
+
+      {/* Animated background pattern */}
+      <div
+        className={darkMode ? "animated-sparkle" : ""}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: darkMode
+            ? "radial-gradient(circle, rgba(255, 255, 255, 0.1) 2px, transparent 2px)"
+            : "repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05) 10px, transparent 10px, transparent 20px)",
+          backgroundSize: darkMode ? "30px 30px" : "20px 20px",
+          opacity: 0.3,
+          zIndex: 1,
+        }}
+      ></div>
+
+      {/* Animated wave at bottom */}
+      <div
+        className="animated-wave"
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          height: "30px",
+          opacity: 0.3,
+          background: darkMode
+            ? 'url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%233f51b5" d="M0,288L48,272C96,256,192,224,288,197.3C384,171,480,149,576,165.3C672,181,768,235,864,250.7C960,267,1056,245,1152,224C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>\')'
+            : 'url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ff9800" d="M0,288L48,272C96,256,192,224,288,197.3C384,171,480,149,576,165.3C672,181,768,235,864,250.7C960,267,1056,245,1152,224C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>\')',
+          backgroundSize: "100% 100%",
+          backgroundRepeat: "no-repeat",
+          zIndex: 1,
+        }}
+      ></div>
 
       {/* Container for the logo and text */}
       <div style={{ position: "relative", zIndex: 2 }}>
@@ -216,39 +253,6 @@ function Banner() {
           </a>
         </div>
       </div>
-
-      {/* Add CSS for animations */}
-      <style jsx>{`
-        @keyframes gradient-slide {
-          0% {
-            background-position: 0% 50%;
-          }
-          100% {
-            background-position: 200% 50%;
-          }
-        }
-
-        @keyframes wave {
-          0% {
-            background-position-x: 0%;
-          }
-          100% {
-            background-position-x: 100%;
-          }
-        }
-
-        @keyframes sparkle {
-          0% {
-            opacity: 0.2;
-          }
-          50% {
-            opacity: 0.4;
-          }
-          100% {
-            opacity: 0.2;
-          }
-        }
-      `}</style>
     </div>
   );
 }

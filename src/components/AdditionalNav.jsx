@@ -1,319 +1,215 @@
 // src/components/AdditionalNav.jsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-function AdditionalNav({ darkMode }) {
-  // Conditionally apply dark-mode to the dropdown menus
-  const dropdownMenuClass = `dropdown-menu ${
-    darkMode ? "dropdown-menu-dark" : ""
-  }`;
+function AdditionalNav() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  // Check for dark mode
+  useEffect(() => {
+    const checkDarkMode = () => {
+      const isDarkMode = document.body.classList.contains("bg-dark");
+      setDarkMode(isDarkMode);
+    };
+
+    // Initial check
+    checkDarkMode();
+
+    // Create a MutationObserver to watch for class changes on document.body
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          checkDarkMode();
+        }
+      });
+    });
+
+    observer.observe(document.body, { attributes: true });
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Navigation items with their dropdown options
+  const navItems = [
+    {
+      title: "Students",
+      items: [
+        "Student Handbook",
+        "Course Selection",
+        "Careers & Post-Secondary",
+        "Learning Resources",
+        "Graduation Information",
+        "Student Services",
+      ],
+    },
+    {
+      title: "Parents",
+      items: [
+        "Parent Advisory Council",
+        "SchoolCash Online",
+        "MyEd BC Parent Portal",
+        "Parent Resources",
+        "Parent Events",
+        "Forms & Documents",
+      ],
+    },
+    {
+      title: "Staff",
+      items: [
+        "Staff Directory",
+        "Teacher Resources",
+        "Curriculum Resources",
+        "Professional Development",
+        "School Calendar",
+        "Room Bookings",
+      ],
+    },
+    {
+      title: "Programs",
+      items: [
+        "AP & Excel",
+        "Athletics",
+        "Career Programs",
+        "Music Programs",
+        "Visual Arts",
+        "Learning Support Services",
+      ],
+    },
+    {
+      title: "About",
+      items: [
+        "School History",
+        "Mission & Vision",
+        "Administration",
+        "Contact Us",
+        "School Map",
+        "Bell Schedule",
+      ],
+    },
+  ];
 
   return (
-    <div className="container my-4">
-      {/* A row centered horizontally */}
-      <div className="row justify-content-center">
-        {/* News Dropdown */}
-        <div className="col-auto">
-          <div className="btn-group">
-            <button
-              type="button"
-              className="btn btn-secondary dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              News
-            </button>
-            <ul className={dropdownMenuClass}>
-              <li>
-                <Link className="dropdown-item" to="/news/daily-bulletin">
-                  Daily Bulletin
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/news/view-calendar">
-                  View Calendar
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/news/twitter-feed">
-                  X/Twitter Feed
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
+    <div
+      className={`navbar navbar-expand-lg secondary-navbar ${
+        darkMode ? "navbar-dark bg-dark" : "navbar-light bg-light"
+      }`}
+      style={{
+        borderTop: `1px solid ${darkMode ? "#495057" : "#dee2e6"}`,
+        borderBottom: `1px solid ${darkMode ? "#495057" : "#dee2e6"}`,
+        boxShadow: "0 2px 5px rgba(0,0,0,0.05)",
+        background: darkMode
+          ? "linear-gradient(to right, #343a40, #212529, #343a40)"
+          : "linear-gradient(to right, #f8f9fa, #e9ecef, #f8f9fa)",
+      }}
+    >
+      <div className="container">
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#additionalNavContent"
+          aria-controls="additionalNavContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
 
-        {/* Students Dropdown */}
-        <div className="col-auto">
-          <div className="btn-group">
-            <button
-              type="button"
-              className="btn btn-secondary dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Students
-            </button>
-            <ul className={dropdownMenuClass}>
-              <li>
-                <Link
-                  className="dropdown-item"
-                  to="/students/agenda-planner-info"
+        <div
+          className="collapse navbar-collapse justify-content-center"
+          id="additionalNavContent"
+        >
+          <ul className="navbar-nav">
+            {navItems.map((nav, index) => (
+              <li className="nav-item dropdown mx-2" key={index}>
+                <a
+                  className="nav-link dropdown-toggle px-3 py-2 rounded-3"
+                  href="#"
+                  id={`navbarDropdown${index}`}
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  style={{
+                    fontWeight: "500",
+                    color: darkMode
+                      ? "rgba(255,255,255,0.85)"
+                      : "rgba(0,0,0,0.85)",
+                  }}
                 >
-                  Agenda Planner Info
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/students/athletics">
-                  Athletics
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="dropdown-item"
-                  to="/students/career-life-connections"
+                  {nav.title}
+                </a>
+                <ul
+                  className={`dropdown-menu ${
+                    darkMode ? "dropdown-menu-dark" : ""
+                  }`}
+                  aria-labelledby={`navbarDropdown${index}`}
                 >
-                  Career Life Connections 11/12
-                </Link>
+                  {nav.items.map((item, idx) => (
+                    <li key={idx}>
+                      <Link
+                        className="dropdown-item"
+                        to={`/${nav.title
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}/${item
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}`}
+                      >
+                        {item}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </li>
-              <li>
-                <Link className="dropdown-item" to="/students/clubs">
-                  Clubs
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="dropdown-item"
-                  to="/students/core-competency-chats"
-                >
-                  Core Competency Chats
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/students/flex-time">
-                  FLEX Time at North
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="dropdown-item"
-                  to="/students/graduation-events"
-                >
-                  Graduation Events Info
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/students/lockers">
-                  Lockers at North
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/students/office365">
-                  Office365
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="dropdown-item"
-                  to="/students/provincial-assessment"
-                >
-                  Provincial Assessment Information
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/students/scholarships">
-                  Scholarships
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/students/student-govt">
-                  Student Gov’t (not an SD41site)
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="dropdown-item"
-                  to="/students/technology-for-students"
-                >
-                  Technology for Students
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="dropdown-item"
-                  to="/students/technology-for-students/digital-responsibilities"
-                >
-                  Students’ Digital Responsibilities
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="dropdown-item"
-                  to="/students/work-habits-rubric"
-                >
-                  Work Habits Rubric
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="dropdown-item"
-                  to="/students/viking-view-newspaper"
-                >
-                  Viking View Newspaper
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Parents Dropdown */}
-        <div className="col-auto">
-          <div className="btn-group">
-            <button
-              type="button"
-              className="btn btn-secondary dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Parents
-            </button>
-            <ul className={dropdownMenuClass}>
-              <li>
-                <Link
-                  className="dropdown-item"
-                  to="/parents/bns-handbook-general-info"
-                >
-                  BNS–Handbook of General Information
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/parents/pac">
-                  Parent Advisory Committee (PAC)
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/parents/registration">
-                  Registration
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/parents/report-absences">
-                  Report Absences
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="dropdown-item"
-                  to="/parents/report-cards-explained"
-                >
-                  Report Cards Explained
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="dropdown-item"
-                  to="/parents/report-cards-explained/work-habits-rubric"
-                >
-                  Work Habits Rubric
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/parents/resources">
-                  Resources
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Staff Dropdown */}
-        <div className="col-auto">
-          <div className="btn-group">
-            <button
-              type="button"
-              className="btn btn-secondary dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Staff
-            </button>
-            <ul className={dropdownMenuClass}>
-              <li>
-                <Link
-                  className="dropdown-item"
-                  to="/staff/district-staff-portal"
-                >
-                  District Staff Portal
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/staff/facility-bookings">
-                  Facility Bookings
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/staff/groupwise-archive">
-                  GroupWise Archive
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/staff/myedbc">
-                  MyEdBC
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/staff/outlook-webmail">
-                  Outlook Webmail
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/staff/pro-d-site">
-                  Pro‑D Site
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/staff/staff-check-in-form">
-                  Staff Check‑in Form
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="dropdown-item"
-                  to="/staff/staff-technology-resources"
-                >
-                  Staff Technology Resources
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Library Dropdown */}
-        <div className="col-auto">
-          <div className="btn-group">
-            <button
-              type="button"
-              className="btn btn-secondary dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Library
-            </button>
-            <ul className={dropdownMenuClass}>
-              <li>
-                <Link className="dropdown-item" to="/library/catalogue">
-                  Catalogue
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/library/learning-commons">
-                  Learning Commons
-                </Link>
-              </li>
-            </ul>
-          </div>
+            ))}
+          </ul>
         </div>
       </div>
+
+      {/* CSS to ensure dropdowns open downward and style the navbar */}
+      <style jsx>{`
+        .secondary-navbar {
+          position: relative;
+          z-index: 999;
+        }
+
+        /* Add subtle pattern overlay */
+        .secondary-navbar::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0.03;
+          background-image: ${darkMode
+            ? "url(\"data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 5v1H0V0h5z'/%3E%3C/g%3E%3C/svg%3E\")"
+            : "url(\"data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 5v1H0V0h5z'/%3E%3C/g%3E%3C/svg%3E\")"};
+          pointer-events: none;
+        }
+
+        /* Override Bootstrap's dropdown positioning for consistent behavior */
+        .dropdown-menu {
+          margin-top: 0;
+        }
+
+        /* Simple hover effect for dropdown toggles */
+        .nav-link.dropdown-toggle:hover {
+          background-color: ${darkMode
+            ? "rgba(255,255,255,0.1)"
+            : "rgba(0,0,0,0.05)"};
+        }
+
+        /* Ensure all dropdowns appear below their triggers */
+        .dropdown-menu[data-bs-popper] {
+          top: 100%;
+          left: 0;
+        }
+
+        /* Add transition for smooth hover effect */
+        .nav-link {
+          transition: background-color 0.2s ease;
+        }
+      `}</style>
     </div>
   );
 }

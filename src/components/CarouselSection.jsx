@@ -8,12 +8,12 @@ function Slideshow() {
         id="mySlideshow"
         className="carousel slide"
         data-bs-ride="carousel"
-        style={{ position: "relative" }}
+        style={{ position: "relative", marginBottom: "30px" }} // Added margin to make room for indicators
       >
-        {/* Indicators at the bottom */}
+        {/* Indicators at the very bottom */}
         <div
           className="carousel-indicators"
-          style={{ bottom: "10px" }} // Moves the dots near the bottom
+          style={{ bottom: "-20px", zIndex: 4 }} // Positioned below the carousel
         >
           <button
             type="button"
@@ -59,12 +59,13 @@ function Slideshow() {
           {/* Slide 1 (Active) */}
           <div
             className="carousel-item active"
-            style={{ height: "400px", position: "relative" }}
+            style={{ height: "300px", position: "relative" }} // Reduced height
           >
             <a
               href="https://north.burnabyschools.ca/blog/2024/01/20/new-building-move-information/"
               target="_blank"
               rel="noopener noreferrer"
+              style={{ display: "block", height: "100%" }}
             >
               <img
                 src="https://north.burnabyschools.ca/wp-content/uploads/2023/12/New-Building_Banner-2.png"
@@ -78,53 +79,54 @@ function Slideshow() {
                   left: 0,
                 }}
               />
-            </a>
-            {/* Caption near bottom, above indicators */}
-            <div
-              className="carousel-caption"
-              style={{
-                position: "absolute",
-                bottom: "60px", // Sits above the indicators at 10px
-                left: 0,
-                width: "100%",
-                textAlign: "center",
-              }}
-            >
+              {/* Gradient overlay instead of solid black */}
               <div
                 style={{
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  padding: "10px",
-                  minHeight: "80px",
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "120px", // Taller gradient area
+                  background:
+                    "linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%)",
+                  zIndex: 2,
+                }}
+              ></div>
+              {/* Text positioned at the bottom with no background */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "15px",
+                  left: 0,
+                  width: "100%",
+                  textAlign: "center",
+                  padding: "0 15px",
+                  zIndex: 3,
                 }}
               >
-                <h5>
-                  <a
-                    href="https://north.burnabyschools.ca/blog/2024/01/20/new-building-move-information/"
-                    className="text-white text-decoration-none"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                <h5 className="text-white">
+                  <span className="text-white text-decoration-none">
                     New Building &amp; Move Information &amp; Virtual Tour
-                  </a>
+                  </span>
                 </h5>
-                <p className="mb-0">
+                <p className="mb-0 text-white" style={{ fontSize: "0.9rem" }}>
                   Updated January 10, 2024 – View our Virtual Tour of the
-                  Building. Please be advised of the new traffic patterns in and
-                  around our campus.
+                  Building
                 </p>
               </div>
-            </div>
+            </a>
           </div>
 
           {/* Slide 2 */}
           <div
             className="carousel-item"
-            style={{ height: "400px", position: "relative" }}
+            style={{ height: "300px", position: "relative" }} // Reduced height
           >
             <a
               href="https://north.burnabyschools.ca/blog/2025/03/12/mamma-mia-the-musical-come-see-it-this-week/"
               target="_blank"
               rel="noopener noreferrer"
+              style={{ display: "block", height: "100%" }}
             >
               <img
                 src="https://north.burnabyschools.ca/wp-content/uploads/2025/03/Mamma-Mia_banner.png"
@@ -138,52 +140,54 @@ function Slideshow() {
                   left: 0,
                 }}
               />
-            </a>
-            <div
-              className="carousel-caption"
-              style={{
-                position: "absolute",
-                bottom: "60px",
-                left: 0,
-                width: "100%",
-                textAlign: "center",
-              }}
-            >
+              {/* Gradient overlay instead of solid black */}
               <div
                 style={{
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  padding: "10px",
-                  minHeight: "80px",
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "120px",
+                  background:
+                    "linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%)",
+                  zIndex: 2,
+                }}
+              ></div>
+              {/* Text positioned at the bottom with no background */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "15px",
+                  left: 0,
+                  width: "100%",
+                  textAlign: "center",
+                  padding: "0 15px",
+                  zIndex: 3,
                 }}
               >
-                <h5>
-                  <a
-                    href="https://north.burnabyschools.ca/blog/2025/03/12/mamma-mia-the-musical-come-see-it-this-week/"
-                    className="text-white text-decoration-none"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    “Mamma Mia!”–The Musical–Come see it this week!
-                  </a>
+                <h5 className="text-white">
+                  <span className="text-white text-decoration-none">
+                    "Mamma Mia!"–The Musical–Come see it this week!
+                  </span>
                 </h5>
-                <p className="mb-0">
-                  Come see our Theatre Program’s 2025 presentation of Mamma
-                  Mia!–The Musical. Experience the magic and joy of ABBA’s music
-                  brought to life on stage!
+                <p className="mb-0 text-white" style={{ fontSize: "0.9rem" }}>
+                  Experience the magic and joy of ABBA's music brought to life
+                  on stage!
                 </p>
               </div>
-            </div>
+            </a>
           </div>
 
           {/* Slide 3 */}
           <div
             className="carousel-item"
-            style={{ height: "400px", position: "relative" }}
+            style={{ height: "300px", position: "relative" }} // Reduced height
           >
             <a
               href="https://north.burnabyschools.ca/blog/2025/03/10/verify-your-myed-account-login-is-working-online-report-cards-are-coming-soon/"
               target="_blank"
               rel="noopener noreferrer"
+              style={{ display: "block", height: "100%" }}
             >
               <img
                 src="https://north.burnabyschools.ca/wp-content/uploads/2017/04/family_portal.png"
@@ -197,52 +201,53 @@ function Slideshow() {
                   left: 0,
                 }}
               />
-            </a>
-            <div
-              className="carousel-caption"
-              style={{
-                position: "absolute",
-                bottom: "60px",
-                left: 0,
-                width: "100%",
-                textAlign: "center",
-              }}
-            >
+              {/* Gradient overlay instead of solid black */}
               <div
                 style={{
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  padding: "10px",
-                  minHeight: "80px",
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "120px",
+                  background:
+                    "linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%)",
+                  zIndex: 2,
+                }}
+              ></div>
+              {/* Text positioned at the bottom with no background */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "15px",
+                  left: 0,
+                  width: "100%",
+                  textAlign: "center",
+                  padding: "0 15px",
+                  zIndex: 3,
                 }}
               >
-                <h5>
-                  <a
-                    href="https://north.burnabyschools.ca/blog/2025/03/10/verify-your-myed-account-login-is-working-online-report-cards-are-coming-soon/"
-                    className="text-white text-decoration-none"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                <h5 className="text-white">
+                  <span className="text-white text-decoration-none">
                     Verify your MyEd Account Login is Working
-                  </a>
+                  </span>
                 </h5>
-                <p className="mb-0">
-                  Report cards are published on MyEd as PDF reports. Parents
-                  &amp; students will need to access their MyEd account in order
-                  to view/print.
+                <p className="mb-0 text-white" style={{ fontSize: "0.9rem" }}>
+                  Report cards are published on MyEd as PDF reports
                 </p>
               </div>
-            </div>
+            </a>
           </div>
 
           {/* Slide 4 */}
           <div
             className="carousel-item"
-            style={{ height: "400px", position: "relative" }}
+            style={{ height: "300px", position: "relative" }} // Reduced height
           >
             <a
               href="https://north.burnabyschools.ca/blog/2024/11/01/reduce-your-morning-stress/"
               target="_blank"
               rel="noopener noreferrer"
+              style={{ display: "block", height: "100%" }}
             >
               <img
                 src="https://north.burnabyschools.ca/wp-content/uploads/2017/09/traffic_congestion_edited-620x250.jpg"
@@ -256,51 +261,54 @@ function Slideshow() {
                   left: 0,
                 }}
               />
-            </a>
-            <div
-              className="carousel-caption"
-              style={{
-                position: "absolute",
-                bottom: "60px",
-                left: 0,
-                width: "100%",
-                textAlign: "center",
-              }}
-            >
+              {/* Gradient overlay instead of solid black */}
               <div
                 style={{
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  padding: "10px",
-                  minHeight: "80px",
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "120px",
+                  background:
+                    "linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%)",
+                  zIndex: 2,
+                }}
+              ></div>
+              {/* Text positioned at the bottom with no background */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "15px",
+                  left: 0,
+                  width: "100%",
+                  textAlign: "center",
+                  padding: "0 15px",
+                  zIndex: 3,
                 }}
               >
-                <h5>
-                  <a
-                    href="https://north.burnabyschools.ca/blog/2024/11/01/reduce-your-morning-stress/"
-                    className="text-white text-decoration-none"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                <h5 className="text-white">
+                  <span className="text-white text-decoration-none">
                     Traffic Advisory–Keep Students Safe
-                  </a>
+                  </span>
                 </h5>
-                <p className="mb-0">
-                  With the changing weather and lower visibility, we want to
-                  remind everyone to stay safe at pick-up and drop-off.
+                <p className="mb-0 text-white" style={{ fontSize: "0.9rem" }}>
+                  Stay safe at pick-up and drop-off with changing weather
+                  conditions
                 </p>
               </div>
-            </div>
+            </a>
           </div>
 
           {/* Slide 5 */}
           <div
             className="carousel-item"
-            style={{ height: "400px", position: "relative" }}
+            style={{ height: "300px", position: "relative" }} // Reduced height
           >
             <a
               href="https://north.burnabyschools.ca/blog/2024/09/02/new-traffic-parking-changes/"
               target="_blank"
               rel="noopener noreferrer"
+              style={{ display: "block", height: "100%" }}
             >
               <img
                 src="https://north.burnabyschools.ca/wp-content/uploads/2024/01/traffic_parking_change_banner.png"
@@ -314,52 +322,53 @@ function Slideshow() {
                   left: 0,
                 }}
               />
-            </a>
-            <div
-              className="carousel-caption"
-              style={{
-                position: "absolute",
-                bottom: "60px",
-                left: 0,
-                width: "100%",
-                textAlign: "center",
-              }}
-            >
+              {/* Gradient overlay instead of solid black */}
               <div
                 style={{
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  padding: "10px",
-                  minHeight: "80px",
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "120px",
+                  background:
+                    "linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%)",
+                  zIndex: 2,
+                }}
+              ></div>
+              {/* Text positioned at the bottom with no background */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "15px",
+                  left: 0,
+                  width: "100%",
+                  textAlign: "center",
+                  padding: "0 15px",
+                  zIndex: 3,
                 }}
               >
-                <h5>
-                  <a
-                    href="https://north.burnabyschools.ca/blog/2024/09/02/new-traffic-parking-changes/"
-                    className="text-white text-decoration-none"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                <h5 className="text-white">
+                  <span className="text-white text-decoration-none">
                     UPDATED September 2024 – Traffic &amp; Parking Changes
-                  </a>
+                  </span>
                 </h5>
-                <p className="mb-0">
-                  Parking and traffic pattern changes are in effect for
-                  September 2024 due to the deconstruction of the old North
-                  Building and repositioning of parking.
+                <p className="mb-0 text-white" style={{ fontSize: "0.9rem" }}>
+                  New parking and traffic patterns are in effect
                 </p>
               </div>
-            </div>
+            </a>
           </div>
 
           {/* Slide 6 */}
           <div
             className="carousel-item"
-            style={{ height: "400px", position: "relative" }}
+            style={{ height: "300px", position: "relative" }} // Reduced height
           >
             <a
               href="https://north.burnabyschools.ca/blog/2024/09/01/new-reporting-order/"
               target="_blank"
               rel="noopener noreferrer"
+              style={{ display: "block", height: "100%" }}
             >
               <img
                 src="https://north.burnabyschools.ca/wp-content/uploads/2023/09/reporting_order_info.png"
@@ -373,69 +382,45 @@ function Slideshow() {
                   left: 0,
                 }}
               />
-            </a>
-            <div
-              className="carousel-caption"
-              style={{
-                position: "absolute",
-                bottom: "60px",
-                left: 0,
-                width: "100%",
-                textAlign: "center",
-              }}
-            >
+              {/* Gradient overlay instead of solid black */}
               <div
                 style={{
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  padding: "10px",
-                  minHeight: "80px",
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "120px",
+                  background:
+                    "linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%)",
+                  zIndex: 2,
+                }}
+              ></div>
+              {/* Text positioned at the bottom with no background */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "15px",
+                  left: 0,
+                  width: "100%",
+                  textAlign: "center",
+                  padding: "0 15px",
+                  zIndex: 3,
                 }}
               >
-                <h5>
-                  <a
-                    href="https://north.burnabyschools.ca/blog/2024/09/01/new-reporting-order/"
-                    className="text-white text-decoration-none"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                <h5 className="text-white">
+                  <span className="text-white text-decoration-none">
                     New Reporting Order Information for Families
-                  </a>
+                  </span>
                 </h5>
-                <p className="mb-0">
-                  The Ministry of Education and Child Care has updated its
-                  reporting policy. Schools must implement the changes in the
-                  2023-24 school year.
+                <p className="mb-0 text-white" style={{ fontSize: "0.9rem" }}>
+                  Updated reporting policy implemented this school year
                 </p>
               </div>
-            </div>
+            </a>
           </div>
         </div>
 
-        {/* Prev/Next Controls */}
-        <button
-          className="carousel-control-prev"
-          type="button"
-          data-bs-target="#mySlideshow"
-          data-bs-slide="prev"
-        >
-          <span
-            className="carousel-control-prev-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="visually-hidden">Previous</span>
-        </button>
-        <button
-          className="carousel-control-next"
-          type="button"
-          data-bs-target="#mySlideshow"
-          data-bs-slide="next"
-        >
-          <span
-            className="carousel-control-next-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="visually-hidden">Next</span>
-        </button>
+        {/* Prev/Next Controls removed as requested */}
       </div>
     </div>
   );
