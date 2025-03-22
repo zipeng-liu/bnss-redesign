@@ -1,8 +1,33 @@
 // src/components/NewsAtNorth.jsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 function NewsAtNorth() {
-  // "What's New @ North" data
+  const [darkMode, setDarkMode] = useState(false);
+
+  // Check for dark mode
+  useEffect(() => {
+    const checkDarkMode = () => {
+      const isDarkMode = document.body.classList.contains("bg-dark");
+      setDarkMode(isDarkMode);
+    };
+
+    // Initial check
+    checkDarkMode();
+
+    // Create a MutationObserver to watch for class changes on document.body
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          checkDarkMode();
+        }
+      });
+    });
+
+    observer.observe(document.body, { attributes: true });
+
+    return () => observer.disconnect();
+  }, []);
+  // "What's New" data
   const whatsNewData = [
     {
       id: 1,
@@ -22,7 +47,7 @@ function NewsAtNorth() {
         "https://north.burnabyschools.ca/wp-content/uploads/2022/11/Winter_Canada_banner-pexels-andre-furtado-3813200-200x110.jpg",
       published: "Posted on 29/01/2025",
       summary:
-        "Dressing for Winter Weather Conditions Whether this is your first Canadian winter, or a familiar climate to you, it’s worth remembering that dressing for cold weather is very different than […]",
+        "Dressing for Winter Weather Conditions Whether this is your first Canadian winter, or a familiar climate to you, it's worth remembering that dressing for cold weather is very different than […]",
       link: "https://north.burnabyschools.ca/blog/2025/01/29/snow-is-coming-are-you-ready/",
     },
     {
@@ -42,7 +67,7 @@ function NewsAtNorth() {
         "https://north.burnabyschools.ca/wp-content/uploads/2025/01/Student-Planning-for-2025-26_Graphic_banner-200x110.png",
       published: "Posted on 22/01/2025",
       summary:
-        "Updated January 22, 2025 Caregivers* are invited to attend our school’s Student Planning Night event on January 22, 2025 to learn about Registration & Course Selection for next year. *Due […]",
+        "Updated January 22, 2025 Caregivers* are invited to attend our school's Student Planning Night event on January 22, 2025 to learn about Registration & Course Selection for next year. *Due […]",
       link: "https://north.burnabyschools.ca/blog/2025/01/22/open-house-night-grades-7-8-11/",
     },
     {
@@ -60,42 +85,57 @@ function NewsAtNorth() {
   // Reusable function to render cards
   const renderNewsCards = (dataArray) => {
     return (
-      <div className="row">
+      <div className="news-cards">
         {dataArray.map((news) => (
-          <div className="col-md-4 mb-3" key={news.id}>
-            <div className="card h-100" style={{ width: "100%" }}>
-              {/* Fixed image size: 200x110, object-fit cover */}
-              <img
-                src={news.image}
-                className="card-img-top"
-                alt={news.title}
-                style={{
-                  width: "100%",
-                  height: "130px",
-                  objectFit: "cover",
-                }}
-              />
-              <div className="card-body d-flex flex-column">
-                <h5 className="card-title">{news.title}</h5>
-                {/* Published date in small text */}
-                <small className="text-muted">{news.published}</small>
-                <p className="card-text mt-2" style={{ flexGrow: 1 }}>
-                  {news.summary}
-                </p>
-                {/* Dark gray button with "Continue Reading" text */}
-                <a
-                  href={news.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn mt-auto"
+          <div
+            className={`card mb-4 news-card ${
+              darkMode ? "bg-dark text-light" : ""
+            }`}
+            key={news.id}
+          >
+            <div className="row g-0">
+              <div className="col-md-3">
+                <img
+                  src={news.image}
+                  className="img-fluid rounded-start h-100"
+                  alt={news.title}
                   style={{
-                    backgroundColor: "#555",
-                    color: "#fff",
-                    border: "none",
+                    objectFit: "cover",
+                    width: "100%",
+                    height: "100%",
+                    minHeight: "180px",
                   }}
-                >
-                  Continue Reading
-                </a>
+                />
+              </div>
+              <div className="col-md-9">
+                <div className="card-body h-100 d-flex flex-column">
+                  <h5 className="card-title">{news.title}</h5>
+                  <small
+                    className={`${
+                      darkMode ? "text-light-50" : "text-muted"
+                    } mb-2`}
+                  >
+                    {news.published}
+                  </small>
+                  <p className="card-text" style={{ flexGrow: 1 }}>
+                    {news.summary}
+                  </p>
+                  <div className="mt-auto text-end">
+                    <a
+                      href={news.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn"
+                      style={{
+                        backgroundColor: "#2e8b57", // Sea Green color
+                        color: "#fff",
+                        border: "none",
+                      }}
+                    >
+                      Continue Reading
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -106,9 +146,39 @@ function NewsAtNorth() {
 
   return (
     <div>
-      {/* "What's New @ North" Section */}
-      <h4>What’s New @ North</h4>
+      {/* "What's New" Section - Title changed as requested */}
+      <h4 className={`mb-4 ${darkMode ? "text-light" : ""}`}>What's New</h4>
       {renderNewsCards(whatsNewData)}
+
+      <style jsx>{`
+        .news-card {
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+          border: 1px solid
+            ${darkMode ? "rgba(255,255,255,0.125)" : "rgba(0,0,0,0.125)"};
+          overflow: hidden;
+        }
+
+        .news-card:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 5px 15px
+            ${darkMode ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0.1)"};
+        }
+
+        .text-light-50 {
+          color: rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 767.98px) {
+          .news-card .row {
+            flex-direction: column;
+          }
+
+          .news-card img {
+            border-radius: 4px 4px 0 0 !important;
+            max-height: 200px;
+          }
+        }
+      `}</style>
     </div>
   );
 }

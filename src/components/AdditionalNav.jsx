@@ -90,124 +90,77 @@ function AdditionalNav() {
 
   return (
     <div
-      className={`navbar navbar-expand-lg secondary-navbar ${
-        darkMode ? "navbar-dark bg-dark" : "navbar-light bg-light"
-      }`}
+      className={`p-2 button-nav ${darkMode ? "bg-dark" : "bg-light"}`}
       style={{
         borderTop: `1px solid ${darkMode ? "#495057" : "#dee2e6"}`,
         borderBottom: `1px solid ${darkMode ? "#495057" : "#dee2e6"}`,
-        boxShadow: "0 2px 5px rgba(0,0,0,0.05)",
-        background: darkMode
-          ? "linear-gradient(to right, #343a40, #212529, #343a40)"
-          : "linear-gradient(to right, #f8f9fa, #e9ecef, #f8f9fa)",
       }}
     >
       <div className="container">
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#additionalNavContent"
-          aria-controls="additionalNavContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div
-          className="collapse navbar-collapse justify-content-center"
-          id="additionalNavContent"
-        >
-          <ul className="navbar-nav">
-            {navItems.map((nav, index) => (
-              <li className="nav-item dropdown mx-2" key={index}>
-                <a
-                  className="nav-link dropdown-toggle px-3 py-2 rounded-3"
-                  href="#"
-                  id={`navbarDropdown${index}`}
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  style={{
-                    fontWeight: "500",
-                    color: darkMode
-                      ? "rgba(255,255,255,0.85)"
-                      : "rgba(0,0,0,0.85)",
-                  }}
-                >
-                  {nav.title}
-                </a>
-                <ul
-                  className={`dropdown-menu ${
-                    darkMode ? "dropdown-menu-dark" : ""
-                  }`}
-                  aria-labelledby={`navbarDropdown${index}`}
-                >
-                  {nav.items.map((item, idx) => (
-                    <li key={idx}>
-                      <Link
-                        className="dropdown-item"
-                        to={`/${nav.title
-                          .toLowerCase()
-                          .replace(/\s+/g, "-")}/${item
-                          .toLowerCase()
-                          .replace(/\s+/g, "-")}`}
-                      >
-                        {item}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
+        <div className="d-flex flex-wrap justify-content-center">
+          {navItems.map((nav, index) => (
+            <div className="dropdown m-1" key={index}>
+              <button
+                className={`btn ${
+                  darkMode ? "btn-outline-light" : "btn-outline-dark"
+                } dropdown-toggle`}
+                type="button"
+                id={`navDropdown${index}`}
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                {nav.title}
+              </button>
+              <ul
+                className={`dropdown-menu ${
+                  darkMode ? "dropdown-menu-dark" : ""
+                }`}
+                aria-labelledby={`navDropdown${index}`}
+              >
+                {nav.items.map((item, idx) => (
+                  <li key={idx}>
+                    <Link
+                      className="dropdown-item"
+                      to={`/${nav.title
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}/${item
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* CSS to ensure dropdowns open downward and style the navbar */}
       <style jsx>{`
-        .secondary-navbar {
+        .button-nav {
           position: relative;
-          z-index: 999;
+          z-index: 900;
         }
 
-        /* Add subtle pattern overlay */
-        .secondary-navbar::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          opacity: 0.03;
-          background-image: ${darkMode
-            ? "url(\"data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 5v1H0V0h5z'/%3E%3C/g%3E%3C/svg%3E\")"
-            : "url(\"data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 5v1H0V0h5z'/%3E%3C/g%3E%3C/svg%3E\")"};
-          pointer-events: none;
-        }
-
-        /* Override Bootstrap's dropdown positioning for consistent behavior */
-        .dropdown-menu {
-          margin-top: 0;
-        }
-
-        /* Simple hover effect for dropdown toggles */
-        .nav-link.dropdown-toggle:hover {
-          background-color: ${darkMode
-            ? "rgba(255,255,255,0.1)"
-            : "rgba(0,0,0,0.05)"};
-        }
-
-        /* Ensure all dropdowns appear below their triggers */
         .dropdown-menu[data-bs-popper] {
           top: 100%;
           left: 0;
+          margin-top: 0.125rem;
         }
 
-        /* Add transition for smooth hover effect */
-        .nav-link {
-          transition: background-color 0.2s ease;
+        /* Ensure buttons have consistent size */
+        .btn {
+          min-width: 110px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+          .btn {
+            font-size: 0.875rem;
+            min-width: auto;
+            padding: 0.375rem 0.75rem;
+          }
         }
       `}</style>
     </div>

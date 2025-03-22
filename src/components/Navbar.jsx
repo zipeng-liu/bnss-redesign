@@ -437,7 +437,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
           >
             <ul className="navbar-nav">
               <Link className="dropdown-item" to="/">
-                <FiHome size={16} className="me-1" /> Home
+                Home
               </Link>
               {/* Mobile School Info Dropdown */}
               <li className="nav-item dropdown">
