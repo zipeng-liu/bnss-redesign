@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // Importing all the corresponding icons from react-icons/fa
 import {
   FaDesktop,
@@ -28,6 +28,32 @@ import {
 import JobOpportunity from "../components/JobOpportunity";
 
 function QuickLinks() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  // Check for dark mode
+  useEffect(() => {
+    const checkDarkMode = () => {
+      const isDarkMode = document.body.classList.contains("bg-dark");
+      setDarkMode(isDarkMode);
+    };
+
+    // Initial check
+    checkDarkMode();
+
+    // Create a MutationObserver to watch for class changes on document.body
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          checkDarkMode();
+        }
+      });
+    });
+
+    observer.observe(document.body, { attributes: true });
+
+    return () => observer.disconnect();
+  }, []);
+
   // Map your original icon classes to the corresponding React Icons
   const linksData = [
     { icon: <FaDesktop />, text: "Provincial Assessments" },
@@ -57,16 +83,37 @@ function QuickLinks() {
   return (
     <div>
       <JobOpportunity />
-      <h4>Quick Links</h4>
-      <ul className="list-group">
+      <h4 className={darkMode ? "text-light" : ""}>Quick Links</h4>
+      <ul className={`list-group ${darkMode ? "list-group-dark" : ""}`}>
         {linksData.map((item, index) => (
-          <li className="list-group-item d-flex align-items-center" key={index}>
+          <li
+            className={`list-group-item d-flex align-items-center ${
+              darkMode ? "bg-dark text-light border-secondary" : ""
+            }`}
+            key={index}
+            style={{
+              transition: "background-color 0.2s ease",
+              cursor: "pointer",
+            }}
+          >
             {/* Icon + text */}
-            <span className="me-2">{item.icon}</span>
+            <span
+              className={`me-2 ${darkMode ? "text-light" : ""}`}
+              style={{ color: darkMode ? "#fff" : "#2e8b57" }}
+            >
+              {item.icon}
+            </span>
             {item.text}
           </li>
         ))}
       </ul>
+
+      {/* Add custom styles for dark mode list items */}
+      <style jsx>{`
+        .list-group-item:hover {
+          background-color: ${darkMode ? "#343a40" : "#f8f9fa"};
+        }
+      `}</style>
     </div>
   );
 }

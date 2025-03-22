@@ -1,10 +1,36 @@
 // src/components/NewsArchive.jsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 function NewsArchive() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  // Check for dark mode
+  useEffect(() => {
+    const checkDarkMode = () => {
+      const isDarkMode = document.body.classList.contains("bg-dark");
+      setDarkMode(isDarkMode);
+    };
+
+    // Initial check
+    checkDarkMode();
+
+    // Create a MutationObserver to watch for class changes on document.body
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          checkDarkMode();
+        }
+      });
+    });
+
+    observer.observe(document.body, { attributes: true });
+
+    return () => observer.disconnect();
+  }, []);
+
   // Updated archive data
   const archives = [
-    { date: "13/01/2025", title: "It’s Pie Time!–Musical Theatre Fundraiser" },
+    { date: "13/01/2025", title: "It's Pie Time!–Musical Theatre Fundraiser" },
     { date: "11/01/2025", title: "Assessment Week Events Jan. 20-24" },
     {
       date: "21/12/2024",
@@ -27,14 +53,48 @@ function NewsArchive() {
 
   return (
     <div className="my-4">
-      <h4>News Archive</h4>
-      <ul className="list-group">
+      <h4 className={darkMode ? "text-light" : ""}>News Archive</h4>
+      <ul className={`list-group ${darkMode ? "list-group-dark" : ""}`}>
         {archives.map((item, index) => (
-          <li className="list-group-item" key={index}>
-            <strong>{item.date}</strong> - {item.title}
+          <li
+            className={`list-group-item ${
+              darkMode ? "bg-dark text-light border-secondary" : ""
+            }`}
+            key={index}
+            style={{
+              transition: "background-color 0.2s ease",
+              cursor: "pointer",
+            }}
+          >
+            <strong style={{ color: darkMode ? "#a5d6a7" : "#2e8b57" }}>
+              {item.date}
+            </strong>{" "}
+            - {item.title}
           </li>
         ))}
       </ul>
+
+      {/* View All Archives button - centered */}
+      <div className="text-center mt-3">
+        <a
+          href="/news/archive"
+          className="btn"
+          style={{
+            backgroundColor: "#2e8b57", // Sea Green color
+            color: "#fff",
+            border: "none",
+          }}
+        >
+          View All Archives
+        </a>
+      </div>
+
+      {/* Add custom styles for dark mode list items */}
+      <style jsx>{`
+        .list-group-item:hover {
+          background-color: ${darkMode ? "#343a40" : "#f8f9fa"};
+        }
+      `}</style>
     </div>
   );
 }
