@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FiSun, FiMoon } from "react-icons/fi";
+import { FiSun, FiMoon, FiHome } from "react-icons/fi";
 
 function Navbar({ darkMode, toggleDarkMode }) {
   // Apply dark mode class to dropdown menus when enabled.
@@ -18,8 +18,8 @@ function Navbar({ darkMode, toggleDarkMode }) {
         <div className="container-fluid">
           {/* Desktop: Left side (logo and navigation buttons) */}
           <div className="d-none d-lg-flex align-items-center">
-            <Link className="navbar-brand me-3" to="/">
-              Burnaby North Secondary School
+            <Link className="btn btn-outline-secondary me-3" to="/">
+              <FiHome size={18} className="me-1" /> Home
             </Link>
             <ul className="navbar-nav flex-row">
               {/* School Info Dropdown */}
@@ -375,14 +375,8 @@ function Navbar({ darkMode, toggleDarkMode }) {
             </ul>
           </div>
 
-          {/* Desktop: Right side (search bar and dark/light mode button) */}
+          {/* Desktop: Right side (dark/light mode button only) */}
           <div className="d-none d-lg-flex align-items-center ms-auto">
-            <input
-              type="text"
-              className="form-control me-2"
-              placeholder="Search"
-              style={{ width: "200px" }}
-            />
             <button
               className="btn"
               onClick={toggleDarkMode}
@@ -400,7 +394,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
             </button>
           </div>
 
-          {/* Mobile view: Combined row with menu toggler, search bar, and dark/light mode button */}
+          {/* Mobile view: Combined row with menu toggler and dark/light mode button */}
           <div className="d-flex d-lg-none align-items-center w-100">
             <button
               className="navbar-toggler me-2"
@@ -413,26 +407,23 @@ function Navbar({ darkMode, toggleDarkMode }) {
             >
               <span className="navbar-toggler-icon"></span>
             </button>
-            <input
-              type="text"
-              className="form-control me-2 flex-grow-1"
-              placeholder="Search"
-            />
-            <button
-              className="btn"
-              onClick={toggleDarkMode}
-              style={{
-                color: darkMode ? "#fff" : "inherit",
-                border: "none",
-                background: "transparent",
-              }}
-            >
-              {darkMode ? (
-                <FiSun size={20} color="#fff" />
-              ) : (
-                <FiMoon size={20} />
-              )}
-            </button>
+            <div className="ms-auto">
+              <button
+                className="btn"
+                onClick={toggleDarkMode}
+                style={{
+                  color: darkMode ? "#fff" : "inherit",
+                  border: "none",
+                  background: "transparent",
+                }}
+              >
+                {darkMode ? (
+                  <FiSun size={20} color="#fff" />
+                ) : (
+                  <FiMoon size={20} />
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -446,7 +437,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
           >
             <ul className="navbar-nav">
               <Link className="dropdown-item" to="/">
-                Home
+                <FiHome size={16} className="me-1" /> Home
               </Link>
               {/* Mobile School Info Dropdown */}
               <li className="nav-item dropdown">
